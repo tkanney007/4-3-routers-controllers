@@ -1,4 +1,4 @@
-# Insert Lesson Title
+# Express Router and Controllers
 
 ## Dependencies
 
@@ -10,10 +10,12 @@ Refer to the following markdown file for the respective sections of the class:
 ## Lesson Objectives
 
 Learners will understand:
-- Insert the knowledge to be acquired
+- What is express.Router and how it is used.
+- What is controllers are
 
 Learners will be able to:
-- Insert the skillset to be acquired
+- Group similar routes together using express.Router
+- Create controllers to clean up routes
 
 
 ## Lesson Plan
