@@ -190,3 +190,53 @@ Implement the PUT and DELETE functions in the controller file.
 
 ---
 
+## Part 3 - Middleware
+
+Middleware are functions that come into play after the server receives the request and before the response is sent to the client. They are arranged in a chain and are called in sequence.
+
+Middleware functions are used for different types of processing tasks required for fulfilling the request like database querying, making API calls, preparing the response, etc, and finally calling the next middleware function in the chain.
+
+### Creating a middleware for all routes
+
+To create a middleware, a function can be defined and wrapped around in `app.use()`. A `next` method is also necessary to run the subsequent functions.
+
+```js
+//index.js
+...
+//Add this middleware function before the fruit routes.
+app.use((req, res, next) => {
+    console.log("This middleware is encountered before every endpoint");
+    next(); //The next method allows the function to serve the next part of the server call.
+});
+
+app.use("/fruits", fruitRoute);
+...
+```
+
+Whenever an endpoint is run, it will first go through the middleware function before proceeding to the endpoint itself.
+
+### Creating a middleware for a specific route
+
+Middleware can be also be added to routes as part of processing. (eg. protecting routes via authentication)
+
+```js
+//fruitRoutes.js
+
+...
+const routeMiddleWare = (req, res, next) => {
+    if(req.body.role === "admin"){
+        next();
+    } else {
+        res.status(403);
+        res.send("Only admins can access this endpoint");
+    }
+}
+...
+
+router.post("/", routeMiddleWare, fruitController.addNewFruit);
+
+```
+
+Test the route by providing a request body with a role and without a role. When there is no role or an incorrect role is proved, the middleware won't allow the request to proceed. However, by providing a role called "admin", the middleware allows the request to proceed and the controller function is then called.
+
+---
